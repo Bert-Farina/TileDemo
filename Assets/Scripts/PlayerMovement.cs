@@ -10,16 +10,20 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb2d;
     private SpriteRenderer _playerSprite;
     private Animator _playerAnimator;
+    private CapsuleCollider2D _playerCollider;
     private bool _playerHasSpeed;
-    
-    [SerializeField] private float runSpeed = 2.0f;
-    private static readonly int IsRunning = Animator.StringToHash("isRunning");
 
+    [SerializeField] private float runSpeed = 2.0f;
+    [SerializeField] private float jumpSpeed = 5.0f;
+    
+    private static readonly int IsRunning = Animator.StringToHash("isRunning");
+    
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _playerSprite = GetComponent<SpriteRenderer>();
         _playerAnimator = GetComponent<Animator>();
+        _playerCollider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -27,6 +31,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Run();
         FlipSprite();
+    }
+    
+    private void Run()
+    {
+        Vector2 playerVelocity = new Vector2(_moveInput.x * runSpeed, _rb2d.velocity.y);
+        _rb2d.velocity = playerVelocity;
+        
+        _playerHasSpeed = Mathf.Abs(_rb2d.velocity.x) > Mathf.Epsilon;
+        _playerAnimator.SetBool(IsRunning, _playerHasSpeed);
     }
 
     private void FlipSprite()
@@ -38,15 +51,16 @@ public class PlayerMovement : MonoBehaviour
     private void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
-        Debug.Log(_moveInput);
+        //Debug.Log(_moveInput);
     }
 
-    private void Run()
+    private void OnJump(InputValue value)
     {
-        Vector2 playerVelocity = new Vector2(_moveInput.x * runSpeed, _rb2d.velocity.y);
-        _rb2d.velocity = playerVelocity;
-        
-        _playerHasSpeed = Mathf.Abs(_rb2d.velocity.x) > Mathf.Epsilon;
-        _playerAnimator.SetBool(IsRunning, _playerHasSpeed);
+        if (!_playerCollider.IsTouchingLayers(LayerMask.GetMask($"Ground"))) return;
+        if (value.isPressed)
+        {
+            _rb2d.velocity += new Vector2(0f, jumpSpeed);
+        }
     }
+
 }
