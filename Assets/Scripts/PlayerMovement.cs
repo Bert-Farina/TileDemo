@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,14 +9,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveInput;
     private Rigidbody2D _rb2d;
     private SpriteRenderer _playerSprite;
+    private Animator _playerAnimator;
+    private bool _playerHasSpeed;
     
-    [SerializeField] private float runSpeed = 2.0f; 
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float runSpeed = 2.0f;
+    private static readonly int IsRunning = Animator.StringToHash("isRunning");
+
+    private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _playerSprite = GetComponent<SpriteRenderer>();
+        _playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,14 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipSprite()
     {
-        if (_rb2d.velocity.x < 0)
-        {
-            _playerSprite.flipX = true;
-        }
-        else if(_rb2d.velocity.x > 0)
-        {
-            _playerSprite.flipX = false;
-        }
+        if (!_playerHasSpeed) return;
+        _playerSprite.flipX = Math.Sign(_rb2d.velocity.x) == -1;
     }
 
     private void OnMove(InputValue value)
@@ -47,5 +45,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 playerVelocity = new Vector2(_moveInput.x * runSpeed, _rb2d.velocity.y);
         _rb2d.velocity = playerVelocity;
+        
+        _playerHasSpeed = Mathf.Abs(_rb2d.velocity.x) > Mathf.Epsilon;
+        _playerAnimator.SetBool(IsRunning, _playerHasSpeed);
     }
 }
