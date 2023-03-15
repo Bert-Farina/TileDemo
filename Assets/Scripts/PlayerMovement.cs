@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb2d;
     private SpriteRenderer _playerSprite;
     private Animator _playerAnimator;
-    private CapsuleCollider2D _playerCollider;
+    private CapsuleCollider2D _playerBodyCollider;
+    private BoxCollider2D _playerFeetCollider;
     private bool _playerHasHorizontalSpeed;
     private bool _playerHasVerticalSpeed;
     private float _startingGravity;
@@ -27,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _playerSprite = GetComponent<SpriteRenderer>();
         _playerAnimator = GetComponent<Animator>();
-        _playerCollider = GetComponent<CapsuleCollider2D>();
+        _playerBodyCollider = GetComponent<CapsuleCollider2D>();
+        _playerFeetCollider = GetComponent<BoxCollider2D>();
 
         _startingGravity = _rb2d.gravityScale;
     }
@@ -63,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (!_playerCollider.IsTouchingLayers(LayerMask.GetMask($"Ground"))) return;
+        if (!_playerFeetCollider.IsTouchingLayers(LayerMask.GetMask($"Ground"))) return;
         if (value.isPressed)
         {
             _rb2d.velocity += new Vector2(0f, jumpSpeed);
@@ -72,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ClimbLadder()
     {
-        if (!_playerCollider.IsTouchingLayers(LayerMask.GetMask($"Ladder")))
+        if (!_playerBodyCollider.IsTouchingLayers(LayerMask.GetMask($"Ladder")))
         {
             _rb2d.gravityScale = _startingGravity;
             _playerAnimator.SetBool(IsClimbing, false);
