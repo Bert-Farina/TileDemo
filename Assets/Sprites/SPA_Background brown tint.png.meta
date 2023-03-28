@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 31
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -487,22 +487,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SPA_Background brown tint_4: 1624362231
-      SPA_Background brown tint_10: -177736646
-      SPA_Background brown tint_15: -1295001718
-      SPA_Background brown tint_11: -380731373
       SPA_Background brown tint_0: -1690879202
       SPA_Background brown tint_1: 1567036605
-      SPA_Background brown tint_13: -1019275982
-      SPA_Background brown tint_3: 121966079
-      SPA_Background brown tint_6: 1220101604
-      SPA_Background brown tint_2: 984949721
-      SPA_Background brown tint_7: 839749918
-      SPA_Background brown tint_9: -552778766
-      SPA_Background brown tint_8: 542062951
+      SPA_Background brown tint_10: -177736646
+      SPA_Background brown tint_11: -380731373
       SPA_Background brown tint_12: -2064025185
+      SPA_Background brown tint_13: -1019275982
       SPA_Background brown tint_14: 447086528
+      SPA_Background brown tint_15: -1295001718
+      SPA_Background brown tint_2: 984949721
+      SPA_Background brown tint_3: 121966079
+      SPA_Background brown tint_4: 1624362231
       SPA_Background brown tint_5: -815101113
+      SPA_Background brown tint_6: 1220101604
+      SPA_Background brown tint_7: 839749918
+      SPA_Background brown tint_8: 542062951
+      SPA_Background brown tint_9: -552778766
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

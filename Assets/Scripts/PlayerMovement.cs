@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -15,13 +16,16 @@ public class PlayerMovement : MonoBehaviour
     private bool _playerHasHorizontalSpeed;
     private bool _playerHasVerticalSpeed;
     private float _startingGravity;
+    private bool _isAlive = true;
 
     [SerializeField] private float runSpeed = 2.0f;
     [SerializeField] private float jumpSpeed = 5.0f;
     [SerializeField] private float climbSpeed = 4.0f;
+    [SerializeField] private Vector2 deathKick = new Vector2(10.0f, 10.0f);
 
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
     private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
+    private static readonly int Dying = Animator.StringToHash("Dying");
 
     private void Start()
     {
@@ -37,11 +41,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (!_isAlive) return;
         Run();
         FlipSprite();
         ClimbLadder();
+        Die();
     }
-    
+
     private void Run()
     {
         Vector2 playerVelocity = new Vector2(_moveInput.x * runSpeed, _rb2d.velocity.y);
@@ -59,12 +65,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(InputValue value)
     {
+        if (!_isAlive) return;
         _moveInput = value.Get<Vector2>();
-        //Debug.Log(_moveInput);
     }
 
     private void OnJump(InputValue value)
     {
+        if (!_isAlive) return;
         if (!_playerFeetCollider.IsTouchingLayers(LayerMask.GetMask($"Ground"))) return;
         if (value.isPressed)
         {
@@ -89,4 +96,23 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimator.SetBool(IsClimbing, _playerHasVerticalSpeed);
     }
 
+    private void Die()
+    {
+        if (_playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")) && _playerSprite.flipX)
+        {
+            _isAlive = false;
+            _playerAnimator.SetTrigger(Dying);
+            _rb2d.velocity = deathKick;
+        }else if (_playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")) && !_playerSprite.flipX)
+        {
+            _isAlive = false;
+            _playerAnimator.SetTrigger(Dying);
+            _rb2d.velocity = new Vector2(-deathKick.x, deathKick.y);
+        }
+        else if(_playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Water")))
+        {
+            _isAlive = false;
+            _playerAnimator.SetTrigger(Dying);
+        }
+    }
 }
