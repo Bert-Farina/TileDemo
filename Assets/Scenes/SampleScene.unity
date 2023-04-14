@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 83470372}
   m_Layer: 10
   m_Name: Goomy (Enemy)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -636,6 +636,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &230868507 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1540303026672091730, guid: 1fdac2eee70c41747a98351272def08a, type: 3}
+  m_PrefabInstance: {fileID: 8390976069083675730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &390690427
 GameObject:
   m_ObjectHideFlags: 0
@@ -17612,6 +17617,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1917012486368361974, guid: 1fdac2eee70c41747a98351272def08a, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 230868507}
+    - target: {fileID: 1917012486368361974, guid: 1fdac2eee70c41747a98351272def08a, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1282680616006940522, guid: 912506ead266f66459ce94e9e659b0a5, type: 3}
     - target: {fileID: 1917012486368361974, guid: 1fdac2eee70c41747a98351272def08a, type: 3}
       propertyPath: deathKick.x
       value: 10

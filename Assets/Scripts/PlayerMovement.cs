@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 5.0f;
     [SerializeField] private float climbSpeed = 4.0f;
     [SerializeField] private Vector2 deathKick = new Vector2(10.0f, 10.0f);
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform gun;
 
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
     private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
@@ -77,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _rb2d.velocity += new Vector2(0f, jumpSpeed);
         }
+    }
+
+    private void OnFire(InputValue value)
+    {
+        if (!_isAlive) return;
+        Instantiate(bullet, gun.position, transform.rotation);
     }
 
     private void ClimbLadder()

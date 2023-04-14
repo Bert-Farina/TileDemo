@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EnemyMovement.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -83,7 +84,8 @@
       <workItem from="1674840534584" duration="2666000" />
       <workItem from="1675269633167" duration="6679000" />
       <workItem from="1678873262280" duration="3920000" />
-      <workItem from="1680023474857" duration="3338000" />
+      <workItem from="1680023474857" duration="4306000" />
+      <workItem from="1681466555459" duration="1964000" />
     </task>
     <servers />
   </component>
